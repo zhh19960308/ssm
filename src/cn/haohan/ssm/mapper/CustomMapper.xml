@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:命名空间，作用是对sql进行分类化管理，sql隔离 -->
+<mapper namespace="cn.haohan.ssm.mapper.CustomMapper">
+   <sql id="query_custom_where">
+   		<if test="hhCustom!=null">
+   		<if test="hhCustom.name!=null and hhCustom.name!=''">
+   			name like '%${hhCustom.name}%'
+   		</if>
+   		</if>
+   </sql>
+   <resultMap type="hhCustom" id="hhCustomResultMap">
+   	<id column="id" property="id"/>
+	<result column="phone_number" property="phoneNumber"/>
+   </resultMap>
+	<select id="findAllCustom" parameterType="cn.haohan.ssm.po.HhCustomVo" resultMap="hhCustomResultMap">
+		SELECT
+		* FROM hh_custom
+		 <where>
+			<include refid="query_custom_where"></include>
+		</where>
+	</select>
+	
+</mapper>
